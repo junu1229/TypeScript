@@ -1,0 +1,7 @@
+{
+  "description": "",
+  "scripts": {
+    "start:db": "npx json-server --watch db.json",
+    "start:parcel": "npx parcel index.html"
+  }
+}

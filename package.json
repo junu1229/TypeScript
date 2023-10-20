@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "@faker-js/faker": "^8.1.0",
-    "@types/google.maps": "^3.54.3"
+    "@types/google.maps": "^3.54.3",
+    "axios": "^1.5.1",
+    "json-server": "^0.17.4"
   }
 }
