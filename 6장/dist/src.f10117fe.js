@@ -5494,6 +5494,9 @@ var Attributes = /** @class */function () {
   Attributes.prototype.set = function (update) {
     Object.assign(this.data, update);
   };
+  Attributes.prototype.getAll = function () {
+    return this.data;
+  };
   return Attributes;
 }();
 exports.Attributes = Attributes;
@@ -5539,6 +5542,24 @@ var User = /** @class */function () {
     this.attributes.set(update);
     this.events.trigger('change');
   };
+  User.prototype.fetch = function () {
+    var _this = this;
+    var id = this.attributes.get('id');
+    if (typeof id !== 'number') {
+      throw new Error('Cannot fetch without an id');
+    }
+    this.sync.fetch(id).then(function (response) {
+      _this.set(response.data);
+    });
+  };
+  User.prototype.save = function () {
+    var _this = this;
+    this.sync.save(this.attributes.getAll()).then(function (response) {
+      _this.trigger('save');
+    }).catch(function () {
+      _this.trigger('error');
+    });
+  };
   return User;
 }();
 exports.User = User;
@@ -5550,16 +5571,14 @@ Object.defineProperty(exports, "__esModule", {
 });
 var User_1 = require("./models/User");
 var user = new User_1.User({
-  name: 'junu',
-  age: 26
+  id: 1,
+  name: 'newer name',
+  age: 0
 });
-console.log(user.get('name'));
-user.on('change', function () {
-  console.log('User was changed, we probably need to update html');
+user.on('save', function () {
+  console.log(user);
 });
-user.set({
-  name: 'New name'
-});
+user.save();
 },{"./models/User":"src/models/User.ts"}],"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
